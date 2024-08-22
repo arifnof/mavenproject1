@@ -1,5 +1,5 @@
 <%-- 
-    Document   : karyawan/tambah
+    Document   : karyawan/edit
     Created on : Aug 20, 2024, 11:29:22?AM
     Author     : arnof
 --%>
@@ -128,6 +128,12 @@
 
         <label for="age">Umur:</label><br>
         <input type="number" id="age" name="age" value="<%= (umurParam != null ? umurParam : umur) %>" required><br><br>
+
+        <label for="jabatan">Jabatan:</label><br>
+        <input type="text" id="jabatan" name="jabatan" value="<%= (jabatanParam != null ? jabatanParam : jabatan) %>" required><br><br>
+        
+        <label for="alamat">Alamat:</label><br>
+        <textarea id="alamat" name="alamat" required><%= (alamatParam != null ? alamatParam : alamat) %></textarea><br><br>
 
         <button type="submit" name="btnEdit" value="edit">Simpan Perubahan</button>
     </form>

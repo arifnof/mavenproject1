@@ -22,6 +22,8 @@
         String idParam = request.getParameter("id");
         String namaParam = request.getParameter("name");
         String umurParam = request.getParameter("age");
+        String alamat = request.getParameter("alamat");
+        String jabatan = request.getParameter("jabatan");
 
         if (action != null && action.equals("add")){
             if (idParam != null && namaParam != null && umurParam != null) {
@@ -64,7 +66,7 @@
                         conn = DatabaseConnection.getConnection();
 
                         // Menyusun SQL untuk menambahkan karyawan baru
-                        String sql = "INSERT INTO karyawan (id, first, last, age) VALUES (?, ?, ?, ?)";
+                        String sql = "INSERT INTO karyawan (id, first, last, age, alamat, jabatan) VALUES (?, ?, ?, ?, ?, ?)";
                         pstmt = conn.prepareStatement(sql);
 
                         // Mengisi parameter PreparedStatement
@@ -72,6 +74,8 @@
                         pstmt.setString(2, nama_depan);
                         pstmt.setString(3, nama_belakang);
                         pstmt.setInt(4, umur);
+                        pstmt.setString(5, alamat);
+                        pstmt.setString(6, jabatan);
 
                         // Eksekusi query untuk menyimpan data
                         int rowsInserted = pstmt.executeUpdate();
@@ -107,8 +111,14 @@
         <label for="jabatan">Nama:</label><br>
         <input type="text" id="name" name="name" required><br><br>
 
-        <label for="gaji">Umur:</label><br>
+        <label for="age">Umur:</label><br>
         <input type="number" id="age" name="age" step="1" required><br><br>
+        
+        <label for="jabatan">Jabatan:</label><br>
+        <input type="text" id="jabatan" name="jabatan" required><br><br>
+        
+        <label for="alamat">Alamat:</label><br>
+        <textarea id="alamat" name="alamat" required></textarea><br><br>
 
         <button type="submit" name="btnAdd" value="add">Simpan</button>
     </form>

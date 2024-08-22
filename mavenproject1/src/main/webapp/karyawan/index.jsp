@@ -22,6 +22,8 @@
                 <th>ID</th>
                 <th>Nama</th>
                 <th>Umur</th>
+                <th>Jabatan</th>
+                <th>Alamat</th>
             </tr>
         </thead>
         <tbody>
@@ -45,6 +47,8 @@
                         int umur = rs.getInt("age");
                         String nama_depan = rs.getString("first");
                         String nama_belakang = rs.getString("last");
+                        String alamat = rs.getString("alamat");
+                        String jabatan = rs.getString("jabatan");
 
                         // Menampilkan data dalam tabel HTML
                         out.println("<tr>");
@@ -52,6 +56,8 @@
                         out.println("<td>" + id + "</td>");
                         out.println("<td>" + nama_depan + ' ' + nama_belakang + "</td>");
                         out.println("<td>" + umur + "</td>");
+                        out.println("<td>" + jabatan + "</td>");
+                        out.println("<td>" + alamat + "</td>");
                         out.println("</tr>");
                     }
 
