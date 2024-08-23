@@ -16,9 +16,9 @@ public class Mavenproject2 {
         // System.out.println("Hello World!");
         
         // URL untuk CalculatorService
-        String calculatorUrl = "http://localhost:8082/CalculatorService";
+        String calculatorUrl = "http://localhost:8081/CalculatorService";
         // URL untuk KaryawanService
-        String karyawanUrl = "http://localhost:8082/KaryawanService";
+        String karyawanUrl = "http://localhost:8081/KaryawanService";
 
         // Publikasikan kedua layanan web
         Endpoint.publish(calculatorUrl, new CalculatorService());

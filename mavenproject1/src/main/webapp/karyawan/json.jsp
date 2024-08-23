@@ -4,7 +4,7 @@
     Author     : arnof
 --%>
 
-<%@ page import="Config.DatabaseConnection" %>
+<%@ page import="Helper.DatabaseConnection" %>
 <%@ page import="java.sql.*" %>
 <%@ page import="org.json.JSONArray" %>
 <%@ page import="org.json.JSONObject" %>
@@ -17,15 +17,33 @@
 
     // JSON Array untuk menyimpan hasil query
     JSONArray jsonArray = new JSONArray();
-
+    
+    String id = request.getParameter("id");
+    Integer idInt = null;
+    
+    JSONObject jsonResponse = new JSONObject();
+    
     try {
+        try{
+            idInt = Integer.parseInt(id);
+        }catch(Exception e){
+        }
+
         // Membuka koneksi ke database (Ganti dengan detail database kamu)
         conn = DatabaseConnection.getConnection();
 
-        // Menjalankan query SELECT
-        String query = "SELECT * FROM karyawan";
-        pstmt = conn.prepareStatement(query);
-        rs = pstmt.executeQuery();
+        if(idInt == null){
+            // Menjalankan query SELECT
+            String query = "SELECT * FROM karyawan";
+            pstmt = conn.prepareStatement(query);
+            rs = pstmt.executeQuery();
+        }else{
+            // Menjalankan query SELECT with filter
+            String query = "SELECT * FROM karyawan WHERE id = ? ";
+            pstmt = conn.prepareStatement(query);
+            pstmt.setInt(1, idInt);
+            rs = pstmt.executeQuery();
+        }
 
         // Mendapatkan metadata untuk kolom
         ResultSetMetaData rsmd = rs.getMetaData();
@@ -56,5 +74,13 @@
     }
 
     // Menampilkan hasil dalam format JSON
-    out.print(jsonArray.toString());
+    if(jsonArray.length() > 0){
+        jsonResponse.put("status", "success");
+        jsonResponse.put("data", jsonArray);
+    }else{
+        jsonResponse.put("status", "error");
+        jsonResponse.put("message", "Karyawan tidak ditemukan");
+    }
+    out.print(jsonResponse.toString());
+
 %>

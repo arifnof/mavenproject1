@@ -5,7 +5,7 @@
 --%>
 
 <%@ page import="java.sql.*" %>
-<%@ page import="Config.DatabaseConnection" %>
+<%@ page import="Helper.DatabaseConnection" %>
 
 <!DOCTYPE html>
 <html>

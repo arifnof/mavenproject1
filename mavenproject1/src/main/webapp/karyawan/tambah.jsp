@@ -6,7 +6,7 @@
 
 <%@ page import="java.sql.Connection, java.sql.PreparedStatement" %>
 <%@ page import="java.sql.SQLException" %>
-<%@ page import="Config.DatabaseConnection" %>
+<%@ page import="Helper.DatabaseConnection" %>
 
 <!DOCTYPE html>
 <html>

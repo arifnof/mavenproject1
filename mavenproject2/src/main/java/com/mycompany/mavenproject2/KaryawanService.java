@@ -65,7 +65,15 @@ public class KaryawanService {
     }
     
     @WebMethod
-    public Karyawan getKaryawanById(int id) {
+    public Karyawan getKaryawanById(String id) {
+        Integer idInt = null;
+        try{
+            idInt = Integer.parseInt(id);
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+        
         Karyawan karyawan = null;
         
         // Koneksi ke database
@@ -80,7 +88,7 @@ public class KaryawanService {
             // Menjalankan query
             String sql = "SELECT id, age, first, last, alamat, jabatan FROM karyawan WHERE id = ? ";
             pstmt = conn.prepareStatement(sql);
-            pstmt.setInt(1, id);
+            pstmt.setInt(1, idInt);
             rs = pstmt.executeQuery();
 
             // Menambahkan data karyawan ke list
