@@ -65,7 +65,7 @@ public class KaryawanService {
     }
     
     @WebMethod
-    public Karyawan getKaryawanById(String id) {
+    public Karyawan getKaryawanById(@WebParam(name = "id") String id) {
         Integer idInt = null;
         try{
             idInt = Integer.parseInt(id);

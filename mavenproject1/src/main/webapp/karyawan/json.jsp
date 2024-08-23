@@ -9,6 +9,7 @@
 <%@ page import="org.json.JSONArray" %>
 <%@ page import="org.json.JSONObject" %>
 
+<%@page contentType="application/json" pageEncoding="UTF-8"%>
 <%
     // Koneksi ke database
     Connection conn = null;

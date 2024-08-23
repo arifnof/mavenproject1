@@ -1,9 +1,3 @@
-<%-- 
-    Document   : karyawan_soap
-    Created on : Aug 22, 2024, 11:21:36?AM
-    Author     : arnof
---%>
-
 <%@ page import="Helper.SoapHelper"%>
 <%@ page import="java.util.Iterator"%>
 <%@ page import="javax.xml.namespace.QName"%>
@@ -19,14 +13,24 @@
 <body>
     <h2>Consume SOAP Web Service - Karyawan</h2>
 
+    <!-- Form untuk memasukkan ID Karyawan -->
+    <form method="GET">
+        <label for="id_karyawan">ID Karyawan:</label>
+        <input type="text" id="id_karyawan" name="id_karyawan" placeholder="Kosongkan untuk semua karyawan">
+        <button type="submit">Cari</button>
+    </form>
+
     <%
     try {
+        // Ambil ID Karyawan dari parameter
+        String idKaryawan = request.getParameter("id_karyawan");
+        
         // Membuat SOAP Connection
         SOAPConnectionFactory soapConnFactory = SOAPConnectionFactory.newInstance();
         SOAPConnection soapConnection = soapConnFactory.createConnection();
 
         // URL dari Web Service
-        URL endpoint = new URL("http://localhost:8082/KaryawanService");
+        URL endpoint = new URL("http://localhost:8081/KaryawanService");
 
         // Membuat pesan SOAP
         MessageFactory messageFactory = MessageFactory.newInstance();
@@ -39,15 +43,22 @@
 
         // Menyusun SOAP body
         SOAPBody soapBody = envelope.getBody();
-        SOAPElement soapBodyElem = soapBody.addChildElement("getKaryawanList", "tem");
+        // Jika id_karyawan tidak kosong, tambahkan ke SOAP request
+        if (idKaryawan != null && !idKaryawan.isEmpty()) {
+            SOAPElement soapBodyElem = soapBody.addChildElement("getKaryawanById", "tem");
+            SOAPElement idKaryawanElem = soapBodyElem.addChildElement("id");
+            idKaryawanElem.addTextNode(idKaryawan);
+        }else{
+            SOAPElement soapBodyElem = soapBody.addChildElement("getKaryawanList", "tem");
+        }
 
         // Simpan perubahan ke SOAP message
         soapMessage.saveChanges();
 
         // Menambahkan header SOAPAction
         MimeHeaders headers = soapMessage.getMimeHeaders();
-        headers.addHeader("SOAPAction", "http://localhost:8082/getKaryawanList");
-        
+        headers.addHeader("SOAPAction", "http://localhost:8081/getKaryawanList");
+
         // Mengirimkan pesan SOAP ke server dan menerima respons
         SOAPMessage soapResponse = soapConnection.call(soapMessage, endpoint);
 
@@ -63,14 +74,18 @@
         // Mengambil data karyawan dari response XML
         SOAPBody responseBody = soapResponse.getSOAPBody();
         java.util.Iterator<?> it = responseBody.getChildElements();
-        
+
         out.println("<h3>Daftar Karyawan:</h3>");
         out.println("<ul>");
-
         
+        Iterator<?> responseIterator;
         // Memeriksa apakah elemen getKaryawanListResponse ada
-        Iterator<?> responseIterator = responseBody.getChildElements(new QName("http://mavenproject2.mycompany.com/", "getKaryawanListResponse"));
-
+        if (idKaryawan != null && !idKaryawan.isEmpty()) {
+            responseIterator = responseBody.getChildElements(new QName("http://mavenproject2.mycompany.com/", "getKaryawanByIdResponse"));
+        }else{
+            responseIterator = responseBody.getChildElements(new QName("http://mavenproject2.mycompany.com/", "getKaryawanListResponse"));
+        }
+        
         if (responseIterator.hasNext()) {
             SOAPElement getKaryawanListResponseElement = (SOAPElement) responseIterator.next();
 
