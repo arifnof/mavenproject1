@@ -4,47 +4,47 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Word Count</title>
+    <title>Training JSP</title>
 </head>
 <body>
-    <h1>Word Count Application</h1>
-    <form method="post">
-        <label for="inputString">Input a string:</label><br>
-        <textarea name="inputString" id="inputString" rows="5" cols="50"></textarea><br/><br/>
-        <input type="submit" value="Submit">
-    </form>
+    
+    <h1>Training JSP</h1>
+    
+    <h2>Day 1</h2>
+    <ul>
+        <li>Word Count <a href="./word_count.jsp">/word_count.jsp</a></li>
+        <li>Login (native form) <a href="./login.jsp">/login.jsp</a></li>
+        <!--<li>Message <a href="./home.jsp">/home.jsp</a></li>-->
+        <li>Tugas 1 <a href="./tugas1.jsp">/tugas1.jsp</a></li>
+    </ul>
 
-    <%
-        // Get input from user
-        String inputString = request.getParameter("inputString");
-        
-        if (inputString != null && !inputString.trim().isEmpty()) {
-            // Normalize to lower case (case insensitive)
-            inputString = inputString.toLowerCase();
-            
-            // Define a regex pattern to match words (ignoring symbols)
-            Pattern pattern = Pattern.compile("\\b[a-zA-Z]+\\b");
-            Matcher matcher = pattern.matcher(inputString);
-            
-            // Store word counts in a map
-            Map<String, Integer> wordCountMap = new HashMap<>();
-            
-            while (matcher.find()) {
-                String word = matcher.group();
-                wordCountMap.put(word, wordCountMap.getOrDefault(word, 0) + 1);
-            }
-
-            // Display the results in a table
-            out.println("<h2>Word Count Results</h2>");
-            out.println("<table border='1' cellpadding='5' cellspacing='0'>");
-            out.println("<tr><th>Word</th><th>Count</th></tr>");
-
-            for (Map.Entry<String, Integer> entry : wordCountMap.entrySet()) {
-                out.println("<tr><td>" + entry.getKey() + "</td><td>" + entry.getValue() + "</td></tr>");
-            }
-
-            out.println("</table>");
-        }
-    %>
+    <h2>Day 2 - 3</h2>
+    <ul>
+        <li>Cek Koneksi DB <a href="./koneksi.jsp">/koneksi.jsp</a></li>
+        <li>Karyawan (CRUD) <a href="./karyawan">/karyawan</a></li>
+        <li>Session <a href="./latinput.jsp">/latinput.jsp</a></li>
+        <li>Hello <a href="./hello.jsp">/hello.jsp</a></li>
+        <li>Trip Validation <a href="./trip.jsp">/trip.jsp</a></li>
+    </ul>
+    
+    <h2>Day 4</h2>
+    <ul>
+        <li>Temperature Conversion (SOAP) <a href="./temperature_soap.jsp">/temperature_soap.jsp</a></li>
+        <li>Calculator (SOAP) <a href="./sum_soap.jsp">/sum_soap.jsp</a></li>
+    </ul>
+    <p>* jalankan project mavenproject2 (pastikan port 8081 tidak ada service yg berjalan agar tidak bentrok)</p>
+    <ul>
+        <li>KaryawanService (SOAP) <a href="http://localhost:8081/KaryawanService">http://localhost:8081/KaryawanService</a></li>
+        <li>Karyawan List and Detail (SOAP) <a href="./karyawan_soap.jsp">/karyawan_soap.jsp</a></li>
+        <li>CalculatorService (SOAP) <a href="http://localhost:8081/CalculatorService">http://localhost:8081/CalculatorService</a></li>
+    </ul>
+    
+    <h2>Day 5</h2>
+    <ul>
+        <li>Umur (JSON) with POST <a href="./umur_json.jsp">/umur_json.jsp</a></li>
+        <li>Karyawan List and Detail (JSON) <a href="./karyawan/json.jsp">/karyawan/json.jsp</a></li>
+        <li>JSON Manipulation <a href="./batas_json.jsp">/batas_json.jsp</a></li>
+    </ul>
+    
 </body>
 </html>
