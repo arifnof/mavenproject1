@@ -4,6 +4,7 @@
     Author     : arnof
 --%>
 
+<%@page import="Helper.*"%>
 <%@page import="java.io.*"%>
 <%@page import="jakarta.xml.soap.*"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -44,7 +45,9 @@
                 soapResponse.writeTo(responseOutputStream);
                 String result = new String(responseOutputStream.toByteArray());
 
-                out.print("<pre>"+ result +"</pre>");
+                String prettyPrintedXml = SoapHelper.getPrettyPrint(result);
+
+                out.print("<pre>"+ prettyPrintedXml +"</pre>");
                 soapCon.close();
             } catch (Exception e){
                 out.print("Error : " + e.getMessage());

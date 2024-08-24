@@ -1,10 +1,9 @@
-<%@ page import="Helper.SoapHelper"%>
-<%@ page import="java.util.Iterator"%>
-<%@ page import="javax.xml.namespace.QName"%>
-<%@ page import="jakarta.xml.soap.*" %>
-<%@ page import="java.io.ByteArrayOutputStream" %>
-<%@ page import="java.net.URL" %>
-
+<%@page import="java.io.*"%>
+<%@page import="jakarta.xml.soap.*"%>
+<%@page import="java.net.*"%>
+<%@page import="Helper.*"%>
+<%@page import="java.util.*"%>
+<%@page import="javax.xml.namespace.QName"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -66,10 +65,12 @@
         ByteArrayOutputStream outStream = new ByteArrayOutputStream();
         soapResponse.writeTo(outStream);
         String soapResponseString = new String(outStream.toByteArray());
-
+        
+        String prettyPrintedXml = SoapHelper.getPrettyPrint(soapResponseString);
+        
         // Menampilkan respons SOAP sebagai string (raw XML)
         out.println("<h3>SOAP Response (Raw XML):</h3>");
-        out.println("<pre>" + soapResponseString.replaceAll("<", "&lt;").replaceAll(">", "&gt;") + "</pre>");
+        out.println("<pre>" + prettyPrintedXml.replaceAll("<", "&lt;").replaceAll(">", "&gt;") + "</pre>");
 
         // Mengambil data karyawan dari response XML
         SOAPBody responseBody = soapResponse.getSOAPBody();

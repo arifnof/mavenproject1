@@ -4,6 +4,7 @@
     Author     : arnof
 --%>
 
+<%@page import="Helper.*"%>
 <%@ page import="jakarta.xml.soap.*" %>
 <%@ page import="java.io.ByteArrayOutputStream" %>
 <%@ page import="java.net.URL" %>
@@ -57,9 +58,12 @@
         soapResponse.writeTo(outStream);
         String soapResponseString = new String(outStream.toByteArray());
 
+        String prettyPrintedXml = SoapHelper.getPrettyPrint(soapResponseString);
+
+        
         // Menampilkan respons SOAP sebagai string (raw XML)
         out.println("<h3>SOAP Response:</h3>");
-        out.println("<pre>" + soapResponseString.replaceAll("<", "&lt;").replaceAll(">", "&gt;") + "</pre>");
+        out.println("<pre>" + prettyPrintedXml.replaceAll("<", "&lt;").replaceAll(">", "&gt;") + "</pre>");
 
         // Menampilkan hasil dari response XML
         SOAPBody responseBody = soapResponse.getSOAPBody();
